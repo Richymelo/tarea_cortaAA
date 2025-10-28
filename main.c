@@ -129,10 +129,10 @@ int main() {
     const int max_backtrack_n = 15;
     const int mc_runs = 1000;
     
-    printf("============================================================================================================================\n");
-    printf("%-6s %-20s %-20s %-20s %-20s %-20s %-20s\n", 
-           "N", "Exhaustive", "Factorial", "Backtracking", "Promising", "Solutions", "Monte Carlo");
-    printf("============================================================================================================================\n");
+    printf("=================================================================================================================================================\n");
+    printf("%-10s %-22s %-22s %-22s %-22s %-22s %-22s\n", 
+           "Reinas", "Nodos Exhaustivo", "Nodos Factorial", "Nodos Backtracking", "Nodos Promising", "Nodos Solucion", "Montecarlo");
+    printf("=================================================================================================================================================\n");
     
     srand(time(NULL));
     
@@ -155,16 +155,19 @@ int main() {
         
         long long mc_sum = 0;
         for (int run = 0; run < mc_runs; run++) {
-            mc_sum += monte_carlo_queens(n);
+            long long result = monte_carlo_queens(n);
+            if (result > 0 && mc_sum < LLONG_MAX - result) {
+                mc_sum += result;
+            }
         }
         format_value((double)mc_sum / mc_runs, mc_str, sizeof(mc_str));
         
-        printf("%-6d %-20s %-20s %-20s %-20s %-20s %-20s\n",
+        printf("%-10d %-22s %-22s %-22s %-22s %-22s %-22s\n",
                n, ex_str, fact_str, bt_str, prom_str, sol_str, mc_str);
         
         if (n % 10 == 0) fflush(stdout);
     }
     
-    printf("============================================================================================================================\n");
+    printf("=================================================================================================================================================\n");
     return 0;
 }
